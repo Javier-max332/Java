@@ -28,7 +28,6 @@ Este sistema es ideal para:
 
 Aquí puedes ver la ventana principal de la aplicación:
 
-![Ventana Principal del Sistema de Gestión de Películas](image_bf29b4.png)
 ![image](https://github.com/user-attachments/assets/859c90b9-40cf-40b4-bd0e-dbcc09a7a758)
 
 ## Tecnologías Utilizadas
