@@ -23,7 +23,7 @@ Este sistema es ideal para:
 * **Capa de Acceso a Datos (DAO):** Implementación robusta del patrón DAO para una interacción limpia y eficiente con la base de datos.
 * **Manejo de Excepciones:** Incluye un manejo de excepciones personalizado (`DAOException`) para gestionar errores relacionados con la base de datos.
 * **Generación de Informes:** Genera y visualiza informes de todas las películas disponibles utilizando JasperReports.
-
+ 
 ## Capturas de Pantalla
 
 Aquí puedes ver la ventana principal de la aplicación:
