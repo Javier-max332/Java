@@ -43,9 +43,12 @@ Aquí puedes ver la ventana principal de la aplicación:
 
 Para ejecutar esta aplicación, necesitarás tener instalado lo siguiente:
 
+## Requisitos del Sistema
+
+Para ejecutar esta aplicación, necesitarás tener instalado lo siguiente:
+
 * **Java Development Kit (JDK):** Versión 8 o superior.
 * **MySQL Server:** Una instancia de MySQL en ejecución (se recomienda la versión 8.0 o superior, aunque versiones anteriores probablemente funcionen).
-* **Maven o Gradle (Recomendado):** Para la gestión de dependencias, aunque puedes añadir los JARs manualmente.
 
 ## Configuración de la Base de Datos
 
