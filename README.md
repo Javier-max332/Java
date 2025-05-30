@@ -29,8 +29,7 @@ Este sistema es ideal para:
 Aquí puedes ver la ventana principal de la aplicación:
 
 ![Ventana Principal del Sistema de Gestión de Películas](image_bf29b4.png)
-
-*(Si tienes más capturas, puedes añadirlas aquí, por ejemplo: vista de gestión de géneros, resultados de búsqueda, etc.)*
+![image](https://github.com/user-attachments/assets/859c90b9-40cf-40b4-bd0e-dbcc09a7a758)
 
 ## Tecnologías Utilizadas
 
@@ -105,10 +104,10 @@ Sigue estos pasos para poner en marcha la aplicación:
 
 1.  **Clonar el Repositorio:**
     ```bash
-    git clone [https://github.com/tu-usuario/ProyectoFinalPeliculasPOOII.git](https://github.com/tu-usuario/ProyectoFinalPeliculasPOOII.git)
-    cd ProyectoFinalPeliculasPOOII
+    git clone [https://github.com/Javier-max332/Java.git](https://github.com/Javier-max332/Java.git)
+    cd Java
     ```
-    *(**Nota:** Reemplaza `https://github.com/tu-usuario/ProyectoFinalPeliculasPOOII.git` con la URL real de tu repositorio.)*
+    *(**Nota:** Esta URL apunta directamente al repositorio principal. Si tu proyecto `ProyectoFinalPeliculasPOOII` es un subdirectorio o un proyecto independiente dentro de ese       repositorio `Java`, asegúrate de navegar al subdirectorio correcto después de clonar, o de usar la URL de clonación específica para tu proyecto si lo tienes como un repositorio separado.)*
 
 2.  **Importar el Proyecto en tu IDE (NetBeans/IntelliJ/Eclipse):**
     * Abre tu IDE preferido.
