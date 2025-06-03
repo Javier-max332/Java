@@ -53,7 +53,6 @@ public class JDPeliculas extends javax.swing.JDialog {
         //llamada el método para inicializar la tabla tblTitulos
         inicializarListaGeneros();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,7 +67,7 @@ public class JDPeliculas extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtAnio = new javax.swing.JTextField();
+        txtAño = new javax.swing.JTextField();
         btnTitulo = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -93,7 +92,7 @@ public class JDPeliculas extends javax.swing.JDialog {
 
         jLabel2.setText("Titulo: ");
 
-        jLabel3.setText("Anio:");
+        jLabel3.setText("Año:");
 
         btnTitulo.setText("Nuevo");
         btnTitulo.addActionListener(new java.awt.event.ActionListener() {
@@ -239,7 +238,7 @@ public class JDPeliculas extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtIdPelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTitulo)
-                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(245, 245, 245)))
                 .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
@@ -248,9 +247,9 @@ public class JDPeliculas extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(btnTitulo)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar))
                     .addComponent(pnlEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -269,7 +268,7 @@ public class JDPeliculas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTitulo)
@@ -288,6 +287,7 @@ public class JDPeliculas extends javax.swing.JDialog {
     private void btnTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTituloActionPerformed
         // llamamos al método limpiarFormulario
         limpiarFormulario();
+        limpiarRestoPantalla();
     }//GEN-LAST:event_btnTituloActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -344,6 +344,8 @@ public class JDPeliculas extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(null, "Busca una pelicula para poder eliminarlo");
         }       
+        limpiarFormulario();
+        limpiarRestoPantalla();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -359,7 +361,7 @@ public class JDPeliculas extends javax.swing.JDialog {
             //mostramos los datos en la caja de texto
             txtIdPelicula.setText(Integer.toString(miPelicula.getIdPelicula()));
             txtTitulo.setText(miPelicula.getTitulo());
-            txtAnio.setText(miPelicula.getAnio());
+            txtAño.setText(miPelicula.getAnio());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Especifica "
                 + "un número entero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -371,78 +373,154 @@ public class JDPeliculas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        //para agregar un nuevo genero de Id. de la pelicula debe ser diferente a -1
-        if (!txtIdPelicula.getText().equals("-1")) {
+        String idPeliculaText = txtIdPelicula.getText().trim();
+    if (idPeliculaText.equals("-1")) {
+        JOptionPane.showMessageDialog(null, "Busca primero la película a la que deseas agregar el género. El ID de la película es -1.");
+        return; // Salir del método
+    }
 
-            int idPelicula = Integer.parseInt(txtIdPelicula.getText());          
-            
-            //ahora verificamos que el IdGenero insertado en la caja de texto
-            //realmente corresponda con uno en la tabla generos
-            if (!txtIdGenero.getText().trim().equals("")) {
-                
-                int idGenero =Integer.parseInt(txtIdGenero.getText());
+    int idPelicula;
+    try {
+        idPelicula = Integer.parseInt(idPeliculaText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El ID de la película debe ser un número entero válido.");
+        txtIdPelicula.requestFocusInWindow();
+        txtIdPelicula.selectAll();
+        return; // Salir del método
+    }
 
-                try {
-                    //hacemos la consulta para ver si existe el ISBN
-                    Genero miGenero = manager.getGeneroDAO().obtener(idGenero);
+    // 2. Validar que el ID del género no esté vacío y sea numérico.
+    String idGeneroText = txtIdGenero.getText().trim();
+    if (idGeneroText.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Especifica el ID del Género que deseas agregar.");
+        txtIdGenero.requestFocusInWindow();
+        return; // Salir del método
+    }
 
-                    //si no se genera una excepción procedemos a tratar de inse:
-                    //los datos
-                    GeneroPelicula generopelicula = new GeneroPelicula(idPelicula, idGenero);
+    int idGenero;
+    try {
+        idGenero = Integer.parseInt(idGeneroText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "El ID del Género debe ser un número entero válido.");
+        txtIdGenero.requestFocusInWindow();
+        txtIdGenero.selectAll();
+        return; // Salir del método
+    }
 
-                    manager.getGeneroPeliculaDAO().insertar(generopelicula);
+    // 3. Verificar si el Género existe en la base de datos y luego intentar la inserción.
+    try {
+        // Intentamos obtener el género de la base de datos
+        // Esto validará si el idGenero realmente corresponde a un género existente.
+        Genero miGenero = manager.getGeneroDAO().obtener(idGenero);
 
-                    actualizarListaGeneros(idPelicula);
-                    JOptionPane.showMessageDialog(null, "Se han guardado los datos");
-                } catch (DAOException ex) {
-                    imprimirMensajeDeErrorDAO(ex);
-                    txtIdGenero.requestFocus();
-                    txtIdGenero.selectAll();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Especifica el IdGenero del Genero");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Busca primero la pelicula del genero");
+        if (miGenero == null) {
+            // Si miGenero es null, significa que el género no existe en la base de datos
+            JOptionPane.showMessageDialog(null, "El ID de Género '" + idGenero + "' no se encontró en la base de datos. Por favor, verifica el ID.");
+            txtIdGenero.requestFocusInWindow();
+            txtIdGenero.selectAll();
+            return; // Salir del método
         }
+
+        // Si llegamos aquí, el género existe, procedemos a insertar la relación.
+        GeneroPelicula generopelicula = new GeneroPelicula(idPelicula, idGenero);
+        manager.getGeneroPeliculaDAO().insertar(generopelicula);
+
+        actualizarListaGeneros(idPelicula);
+        JOptionPane.showMessageDialog(null, "¡Género agregado exitosamente a la película!");
+
+    } catch (DAOException ex) {
+        // Captura excepciones específicas de tu capa de acceso a datos (DAO)
+        imprimirMensajeDeErrorDAO(ex); // Un método que ya usas para manejar errores de DAO
+        txtIdGenero.requestFocusInWindow();
+        txtIdGenero.selectAll();
+    } catch (Exception ex) {
+        // Captura cualquier otra excepción inesperada
+        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado al agregar el género: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        System.err.println("Error inesperado al agregar género a película: " + ex.getMessage());
+        ex.printStackTrace(); // Imprime el stack trace para depuración
+    }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarGeneroActionPerformed
-        if (tblGeneros.getRowCount() > 0) {
-            //obtenemos el idGenero seleccionado
-            int idGenero = Integer.parseInt(tblGeneros.getValueAt(tblGeneros.getSelectedRow(),
-                    0).toString());
+    if (tblGeneros.getRowCount() > 0) {
+        // Verificar si hay una fila seleccionada en la tabla
+        int selectedRow = tblGeneros.getSelectedRow();
+        if (selectedRow == -1) {
+            // No hay fila seleccionada, mostrar un mensaje al usuario
+            JOptionPane.showMessageDialog(null, "Por favor, selecciona el género que deseas borrar de la tabla.",
+                                      "Ningún Género Seleccionado", JOptionPane.WARNING_MESSAGE);
+            return; // Salir del método ya que no hay nada que borrar
+        }
 
-            if (JOptionPane.showConfirmDialog(rootPane, "¿Seguro que "
-                    + "\nquieres borrar el IdGenero: "+idGenero
-                    + "\nvinculado con la pelicula activo?",
-                    "Borrar IdGenero vinculado al la pelicula",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                
-                //obtenemos el Idpelicula de la caja de texto
-                int idPelicula = Integer.parseInt(txtIdPelicula.getText());
+        // Usar un bloque try-catch para manejar posibles NumberFormatException
+        // si el valor en la tabla no es un número (aunque debería serlo si se carga correctamente)
+        int idGenero;
+        try {
+            // Obtenemos el idGenero de la fila seleccionada en la columna 0
+            idGenero = Integer.parseInt(tblGeneros.getValueAt(selectedRow, 0).toString());
+        } catch (NumberFormatException e) {
+            // En caso de que el valor en la tabla no sea un número válido
+            JOptionPane.showMessageDialog(null, "Error: El ID del género en la tabla no es un número válido.",
+                                      "Error de Datos", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Imprimir el stack trace para depuración
+            return; // Salir del método
+        }
 
-                //creamos un objeto de IsbnAutor
-                GeneroPelicula generopelicula = new GeneroPelicula(idPelicula, idGenero);
+        // Confirmación del usuario antes de borrar
+        int confirmResult = JOptionPane.showConfirmDialog(rootPane,
+            "¿Estás seguro de que quieres borrar el Género con ID: " + idGenero +
+            "\nvinculado a la película activa?",
+            "Borrar Género Vinculado a Película",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
 
-                try {
-                    //llamamos al método eliminar que recibe
-                    //el objeto creado anteriormente
-                    manager.getGeneroPeliculaDAO().eliminar(generopelicula);
+        if (confirmResult == JOptionPane.YES_OPTION) {
+            // Obtenemos el IdPelicula de la caja de texto
+            // También debemos validar este campo, ya que es crucial para la eliminación
+            int idPelicula;
+            try {
+                idPelicula = Integer.parseInt(txtIdPelicula.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: El ID de la película no es un número válido. " +
+                    "Asegúrate de que la película esté correctamente seleccionada.",
+                    "Error de ID de Película", JOptionPane.ERROR_MESSAGE);
+                txtIdPelicula.requestFocusInWindow();
+                txtIdPelicula.selectAll();
+                e.printStackTrace();
+                return; // Salir del método
+            }
 
-                    //actualizamos nuestra tabla
-                    actualizarListaGeneros(idPelicula);
+            // Creamos un objeto de GeneroPelicula con los IDs obtenidos
+            GeneroPelicula generopelicula = new GeneroPelicula(idPelicula, idGenero);
 
-                    //mandamos mensaje de confirmación
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado "
-                        + " el IdGenero con exito");
+            try {
+                // Llamamos al método eliminar que recibe el objeto creado anteriormente
+                manager.getGeneroPeliculaDAO().eliminar(generopelicula);
 
-                } catch (DAOException ex) {
-                    imprimirMensajeDeErrorDAO( ex );
-                } //fin del catch
-            } //fin del if question
-        } //fin del if getRowCount...
+                // Actualizamos nuestra tabla para reflejar el cambio
+                actualizarListaGeneros(idPelicula);
+
+                // Mandamos mensaje de confirmación de éxito
+                JOptionPane.showMessageDialog(null, "El Género con ID " + idGenero +
+                    " ha sido desvinculado exitosamente de la película.",
+                    "Eliminación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (DAOException ex) {
+                // Capturamos excepciones específicas de tu capa de acceso a datos (DAO)
+                imprimirMensajeDeErrorDAO(ex); // Un método que ya usas para manejar errores de DAO
+            } catch (Exception ex) {
+                // Captura cualquier otra excepción inesperada durante la eliminación
+                JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado al eliminar el género vinculado: " + ex.getMessage(),
+                    "Error Inesperado", JOptionPane.ERROR_MESSAGE);
+                System.err.println("Error inesperado al eliminar género de película: " + ex.getMessage());
+                ex.printStackTrace(); // Imprime el stack trace para depuración
+            }
+        }
+    } else {
+        // No hay filas en la tabla para borrar
+        JOptionPane.showMessageDialog(null, "No hay géneros vinculados para borrar en esta película.",
+            "Tabla Vacía", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_btnEliminarGeneroActionPerformed
 
     /**
@@ -504,7 +582,7 @@ public class JDPeliculas extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlEntrada;
     private javax.swing.JTable tblGeneros;
-    private javax.swing.JTextField txtAnio;
+    private javax.swing.JTextField txtAño;
     private javax.swing.JTextField txtBuscarPorId;
     private javax.swing.JTextField txtIdGenero;
     private javax.swing.JTextField txtIdPelicula;
@@ -520,7 +598,7 @@ public class JDPeliculas extends javax.swing.JDialog {
         txtIdPelicula.setText("-1");
         //limpiamos las otras cajas de texto
         txtTitulo.setText("");
-        txtAnio.setText("");
+        txtAño.setText("");
         
         //ubicamos el focus en la caja de texto del titulo
         txtTitulo.requestFocusInWindow();
@@ -531,25 +609,44 @@ public class JDPeliculas extends javax.swing.JDialog {
      * @return true si todos son validados
      * correctamente, false en caso contrario
      */
-    private boolean validar(){
+    private boolean validar() {
+        // Inicializa validacion a false, solo se establecerá en true si todas las verificaciones pasan
         boolean validacion = false;
-        idPelicula = Integer.parseInt(txtIdPelicula.getText());
+
+        // 1. Validar Título
         titulo = txtTitulo.getText().trim();
-        anio = txtAnio.getText().trim();
-        
-        if (titulo.equals("")) {
-            JOptionPane.showMessageDialog(null, "Especifica el titulo del genero");
+        if (titulo.isEmpty()) { // Usa isEmpty() para mayor claridad y eficiencia
+            JOptionPane.showMessageDialog(null, "El título de la película no puede estar vacío.");
             txtTitulo.requestFocusInWindow();
-            return validacion;
+            return false; // Retorna false inmediatamente si la validación falla
         }
-        
-        if (anio.equals("")) {
-            JOptionPane.showMessageDialog(null, "Especifica el anio de la pelicula");
-            txtAnio.requestFocusInWindow();
-            return validacion;
+
+        // 2. Validar Año
+        anio = txtAño.getText().trim();
+        if (anio.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El año de la película no puede estar vacío.");
+            txtAño.requestFocusInWindow();
+            return false;
         }
-        return true;
-    }//fin del método
+        try {
+            int anioNumerico = Integer.parseInt(anio);
+            // Opcional: Agrega más validación específica del año (por ejemplo, dentro de un rango razonable)
+            // Las películas comenzaron alrededor de 1888. +5 para futuros lanzamientos.
+            if (anioNumerico < 1888 || anioNumerico > java.time.Year.now().getValue() + 5) {
+                JOptionPane.showMessageDialog(null, "El año de la película no es válido. Debe ser entre 1888 y " + (java.time.Year.now().getValue() + 5) + ".");
+                txtAño.requestFocusInWindow();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El año de la película debe ser un número entero válido.");
+            txtAño.requestFocusInWindow();
+            return false;
+        }
+
+        // Si todas las validaciones pasan
+        validacion = true;
+        return validacion;
+    }
     
     /**
      * Imrpime un mensaje de error personalizado para aquellos errores 
@@ -637,4 +734,10 @@ public class JDPeliculas extends javax.swing.JDialog {
         //redimensionamos la celda
         setJTableColumnsWidth(tblGeneros, 480,50,120);
     }//fin del método
+    
+    private void limpiarRestoPantalla(){
+        txtBuscarPorId.setText("");
+        txtIdGenero.setText("");
+        inicializarListaGeneros();
+    }
 }
