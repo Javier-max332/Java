@@ -27,8 +27,7 @@ Este sistema es ideal para:
 ## Capturas de Pantalla
 
 Aquí puedes ver la ventana principal de la aplicación:
-
-![image](https://github.com/user-attachments/assets/859c90b9-40cf-40b4-bd0e-dbcc09a7a758)
+![image](https://github.com/user-attachments/assets/20d1f7bf-e37b-4ae2-a403-e1cd7da8768f)
 
 ## Tecnologías Utilizadas
 
